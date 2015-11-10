@@ -1,7 +1,7 @@
 --[[
 LuCI - Lua Configuration Interface - Internet access control
 
-Copyright 2015 Krzysztof Szuster.
+Copyright 2015 Krzysztof Szuster  <@openwrt.org>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -112,9 +112,11 @@ s = mr:section(TypedSection, "rule", translate("Client Rules"))
     o = s:option(Value, "start_time", "Start time")
         o.rmempty = true  -- do not validae blank
         o.validate = validate_time 
+	o.size = 5
     o = s:option(Value, "stop_time", "End time") 
         o.rmempty = true  -- do not validae blank
         o.validate = validate_time
+	o.size = 5
 
 
 if CONFIG_FILE_AC==CONFIG_FILE_RULES then
