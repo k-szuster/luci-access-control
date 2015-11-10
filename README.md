@@ -18,7 +18,7 @@ folder.
 
 - You MUST also add the following line to your /openwrt/feeds/luci/contrib/package/luci-addons/Makefile
 
-	$(eval $(call application,access-control,Restrict internet access for specified clients, using schedules))
+	$(eval $(call application,access-control,Restrict internet access for specified clients using schedules))
 
 - After this has been completed, call 
 
