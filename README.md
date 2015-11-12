@@ -7,9 +7,15 @@ You can block the internet access permanently or on schedule basis for any MAC a
 After installation you'll find a new page in OpenWrt's GUI: Network/Access control.
 
 The software is a Luci module extending system's firewall, so it runs on any platform with no need of  recompiling.
+Tested on OpenWrt BB and CC.
 
-To build the OpenWrt package
-============================
+To install without building ipk package
+=======================================
+- Copy contents of root/ to / directory on target machine.
+- Copy contents of luasrc/ to /usr/lib/lua/luci/ on target machine.
+To build the package for OpenWrt BB
+
+===================================
 - Place folder luci-access-control into your 
 
 	<openwrt>/feeds/luci/applications
@@ -33,8 +39,3 @@ You'll find it in <openwrt>/bin/<target>/packages/luci/luci-app-access-control_.
 
 - Install luci-app-access-control package on the OpenWrt router.
 
-
-To install without building ipk package
-=======================================
-- Copy contents of root/ to / directory on target machine.
-- Copy contents of luasrc/ to /usr/lib/lua/luci/ on target machine.
