@@ -13,8 +13,8 @@ To install without building ipk package
 =======================================
 - Copy contents of root/ to / directory on target machine.
 - Copy contents of luasrc/ to /usr/lib/lua/luci/ on target machine.
-To build the package for OpenWrt BB
 
+To build the package for OpenWrt BB
 ===================================
 - Place folder luci-access-control into your 
 
