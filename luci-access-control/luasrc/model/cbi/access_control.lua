@@ -17,7 +17,9 @@ local CONFIG_FILE_AC    = "access_control"
 local ma, mr, s, o
 
 ma = Map(CONFIG_FILE_AC, translate("Internet Access Control"),
-  	translate("Access Control allows you to manage internet access for specific local hosts."))
+    translate("Access Control allows you to manage internet access for specific local hosts.<br>\
+       Each rule defines which user has blocked access to the internet. The rules may be active parmanently or in certain time of day.<br>\
+       The rules may also be restricted to specific days of the week."))
 if CONFIG_FILE_AC==CONFIG_FILE_RULES then
     mr = ma
 else
@@ -26,12 +28,10 @@ end
 ---------------------------------------------------------------------------------------------
 --  General switch
 
---s = ma:section(TypedSection, "access_control", "General settings")
---    s.anonymous = true
-s = ma:section(NamedSection, "general", "access_control", "General settings")
-    o = s:option(Flag, "enabled", translate("Enabled"))
-        o.rmempty = false
-
+s = ma:section(NamedSection, "general", "access_control", "General switch")
+    o_global_enable = s:option(Flag, "enabled", translate("Enabled"))
+        o_global_enable.rmempty = false
+        
 ---------------------------------------------------------------------------------------------
 -- Rule table
 
@@ -57,21 +57,16 @@ s = mr:section(TypedSection, "rule", translate("Client Rules"))
         o.default = '1'
         o.rmempty  = false
     
-        -- ammend "enabled" option  
+        -- ammend "enabled" option and set weekdays  
         function o.write(self, section, value)
-            local s = "cbid.access_control.general.enabled"
-            local global_enable = luci.http.formvalue(s)
+            wd_write (self, section, value)
+            local key = o_global_enable:cbid (o_global_enable.section.section)
+            --  "cbid.access_control.general.enabled"
+            local global_enable = o_global_enable.map:formvalue (key)
             if global_enable == "1" then
                 self.map:set(section, "enabled", value)
-                io.stderr:write("set "..value.."\n")
             else
                 self.map:set(section, "enabled", "0")
-                io.stderr:write("reset\n")
---            if global_enable == nil then
---                ma.uci:section(CONFIG_FILE_AC, "access_control", "general", 
---                    { enabled = "0" })
---                ma.uci:commit(CONFIG_FILE_AC)
---            end
             end	
 --            self.map:set(section, "src",  "*")
 --            self.map:set(section, "dest", "wan")
@@ -82,14 +77,14 @@ s = mr:section(TypedSection, "rule", translate("Client Rules"))
         end
       
     o = s:option(Value, "name", "Description")
-        o.rmempty = false  -- force validate
-        -- better validate, then: o.datatype = "minlength(1)"
-        o.validate = function(self, val, sid)
-            if type(val) ~= "string" or #val == 0 then
-                return nil, translate("Name must be specified!")
-            end
-            return val
-        end
+--        o.rmempty = false  -- force validate
+--        -- better validate, then: o.datatype = "minlength(1)"
+--        o.validate = function(self, val, sid)
+--            if type(val) ~= "string" or #val == 0 then
+--                return nil, translate("Name must be specified!")
+--            end
+--            return val
+--        end
         
      o = s:option(Value, "src_mac", "MAC address") 
         o.rmempty = false
@@ -112,11 +107,57 @@ s = mr:section(TypedSection, "rule", translate("Client Rules"))
     o = s:option(Value, "start_time", "Start time")
         o.rmempty = true  -- do not validae blank
         o.validate = validate_time 
-	o.size = 5
+        o.size = 5
     o = s:option(Value, "stop_time", "End time") 
         o.rmempty = true  -- do not validae blank
         o.validate = validate_time
-	o.size = 5
+        o.size = 5
+
+    local Days = {'mon','tue','wed','thu','fri','sat','sun'}
+    local Days1 = translate('MTWTFSS')
+    
+    function make_day (nday)
+        local day = Days[nday]
+        local label = Days1:sub (nday,nday)
+        local o = s:option(Flag, day, label)
+        o.default = '1'
+        o.rmempty = false  --  always call write
+        
+        -- read from weekdays actually
+        function o.cfgvalue(self, s)
+            local days = self.map:get (s, "weekdays")
+            if days==nil then
+                return '1'
+            end
+            return string.find (days, day) and '1' or '0'
+        end
+     
+        --  prevent saveing option in config file   
+        function o.write(self, section, value)
+            self.map:set(section, self.option, '')
+        end
+    end
+  
+    for i=1,7 do   
+        make_day (i)
+    end   
+    
+    function wd_write(self, section, value)
+        value=''
+        local cnt=0
+        for _,day in ipairs (Days) do
+            local key = "cbid."..self.map.config.."."..section.."."..day
+--io.stderr:write (tostring(key)..'='..tostring(mr:formvalue(key))..'\n')
+            if mr:formvalue(key) then
+                value = value..' '..day
+                cnt = cnt+1
+            end
+        end
+        if cnt==7  then  --all days means no filterung 
+            value = ''
+        end
+        self.map:set(section, "weekdays", value)
+    end
 
 
 if CONFIG_FILE_AC==CONFIG_FILE_RULES then
