@@ -9,8 +9,12 @@ After installation you'll find a new page in OpenWrt's GUI: Network/Access contr
 The software is a Luci app extending system's firewall, so it runs on any platform with no need of recompiling.
 Tested on OpenWrt BB and CC.
 
+Screen shot
+-----------
+https://github.com/k-szuster/luci-access-control/blob/master/snapshot1.png?raw=true
+
 Source repository
-=================
+-----------------
     https://github.com/k-szuster/luci-access-control
 See also:
     https://github.com/k-szuster/luci-access-control-package
@@ -18,12 +22,16 @@ for a standalone-package version of the same software.
 
 
 To install without building ipk package
-=======================================
+---------------------------------------
 - Copy contents of root/ to / directory on target machine.
 - Copy contents of luasrc/ to /usr/lib/lua/luci/ on target machine.
 
+To download prebuilt package
+----------------------------
+Visit: https://github.com/k-szuster/luci-access-control/releases
+
 To build the package for OpenWrt BB
-===================================
+-----------------------------------
 - Place folder luci-access-control into your 
 
 	<openwrt>/feeds/luci/applications

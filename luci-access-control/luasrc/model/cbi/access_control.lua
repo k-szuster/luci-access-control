@@ -1,7 +1,7 @@
 --[[
 LuCI - Lua Configuration Interface - Internet access control
 
-Copyright 2015 Krzysztof Szuster  <@openwrt.org>
+Copyright 2015 Krzysztof Szuster.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@ local CONFIG_FILE_AC    = "access_control"
 local ma, mr, s, o
 
 ma = Map(CONFIG_FILE_AC, translate("Internet Access Control"),
-    translate("Access Control allows you to manage internet access for specific local hosts.<br>\
-       Each rule defines which user has blocked access to the internet. The rules may be active parmanently or in certain time of day.<br>\
+    translate("Access Control allows you to manage internet access for specific local hosts.<br/>\
+       Each rule defines which user has blocked access to the internet. The rules may be active permanently or in certain time of day.<br/>\
        The rules may also be restricted to specific days of the week."))
 if CONFIG_FILE_AC==CONFIG_FILE_RULES then
     mr = ma
@@ -98,7 +98,7 @@ s = mr:section(TypedSection, "rule", translate("Client Rules"))
         hh,mm = string.match (value, "^(%d?%d):(%d%d)$")
         hh = tonumber (hh)
         mm = tonumber (mm)
-        if hh and mm and hh <= 23 and mm <= 60 then
+        if hh and mm and hh <= 23 and mm <= 59 then
             return value
         else
             return nil, "Time value must be HH:MM or empty"
