@@ -11,15 +11,14 @@ Tested on OpenWrt BB and CC.
 
 Screen shot
 -----------
-https://github.com/k-szuster/luci-access-control/blob/master/snapshot1.png?raw=true
+![Internet Access Control](https://github.com/k-szuster/luci-access-control/blob/master/snapshot1.png?raw=true)
 
 Source repository
 -----------------
-    https://github.com/k-szuster/luci-access-control
-See also:
-    https://github.com/k-szuster/luci-access-control-package
-for a standalone-package version of the same software.
+https://github.com/k-szuster/luci-access-control
 
+See also:    https://github.com/k-szuster/luci-access-control-package
+for a standalone-package version of the same software.
 
 To install without building ipk package
 ---------------------------------------
