@@ -1,0 +1,16 @@
+#!/usr/bin/lua
+require "uci"
+os.execute ("exec /etc/init.d/inetac stop")
+os.execute ("exec /etc/init.d/inetac disable")
+local x = uci.cursor()
+local commit = false
+x:foreach ("firewall", "rule",
+    function(s)
+        if s.ac_enabled~=nil  then
+            x:delete ("firewall", s[".name"])
+            commit = true
+        end
+    end)
+if commit then
+    x:commit("firewall")
+end

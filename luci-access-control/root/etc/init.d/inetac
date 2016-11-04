@@ -1,0 +1,20 @@
+#!/bin/sh /etc/rc.common
+# Copyright 2016 Krzysztof Szuster
+#
+#    This file is part of luci-access-control
+#
+START=70
+STOP=15
+PROG=/usr/sbin/inetacd.lua
+
+SERVICE_MATCH_EXEC=
+SERVICE_MATCH_NAME=1
+SERVICE_DAEMONIZE=1
+
+start() {        
+	service_start $PROG
+}                 
+ 
+stop() {          
+        service_stop $PROG
+}

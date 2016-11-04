@@ -4,10 +4,15 @@ Internet Access Control for OpenWrt
 This software is designed for OpwnWrt routers.
 It allows you to restrict the internet access for specific hosts in your LAN.
 You can block the internet access permanently or on schedule basis for any MAC address.
-After installation you'll find a new page in OpenWrt's GUI: Network/Access control.
+The schedule contains the  time of a day and the deys of the week.
+New in version 4:
+You can also issue a "ticket" for any blocked user. It gives him an extraordinary access to the internet for a given time.
 
 The software is a Luci app extending system's firewall, so it runs on any platform with no need of recompiling.
 Tested on OpenWrt BB and CC.
+Note: due to a bug in CC, the times must be set in UTC, rather than local time.
+
+After installation you'll find a new page in OpenWrt's GUI: Network/Access control.
 
 Screen shot
 -----------
@@ -17,17 +22,15 @@ Source repository
 -----------------
 https://github.com/k-szuster/luci-access-control
 
-See also:    https://github.com/k-szuster/luci-access-control-package
+See also: https://github.com/k-szuster/luci-access-control-package
 for a standalone-package version of the same software.
 
-To install without building ipk package
----------------------------------------
-- Copy contents of root/ to / directory on target machine.
-- Copy contents of luasrc/ to /usr/lib/lua/luci/ on target machine.
-
-To download prebuilt package
+To install prebuilt package
 ----------------------------
 Visit: https://github.com/k-szuster/luci-access-control/releases
+Download ipk file to your device and install it with opkg.
+Or:
+copy contents of luci-app-access-control/files to / directory on target devicee.
 
 To build the package for OpenWrt BB
 -----------------------------------
@@ -51,5 +54,3 @@ from your openwrt folder. Here, you must include the following packages in your 
 
 - Call make to compile OpenWRT with the selected package installed.
 You'll find it in <openwrt>/bin/<target>/packages/luci/luci-app-access-control_....ipk file.
-
-- Install luci-app-access-control package on the OpenWrt router.

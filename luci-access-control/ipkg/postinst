@@ -1,0 +1,4 @@
+#!/bin/sh
+/etc/init.d/inetac enable
+/etc/init.d/inetac start
+exit 0
