@@ -36,6 +36,10 @@ else
     mr = Map(CONFIG_FILE_RULES)
 end
 
+function mr.on_after_commit (self)
+    os.execute ("/etc/init.d/inetac restart >/dev/null 2>/dev/null")
+end
+
 --=============================================================================================
 --  General section
 

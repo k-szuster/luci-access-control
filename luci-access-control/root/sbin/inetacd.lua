@@ -49,7 +49,9 @@ function check ()
 end
 
 while true do
-    check()
-    os.execute ("exec sleep 60")
+    local nexttime = check()
+    if nexttime==nil then
+        break
+    end
+    os.execute ("exec sleep "..nexttime)
 end    
-

@@ -7,14 +7,20 @@ START=70
 STOP=15
 PROG=/usr/sbin/inetacd.lua
 
-SERVICE_MATCH_EXEC=
-SERVICE_MATCH_NAME=1
 SERVICE_DAEMONIZE=1
 
 start() {        
-	service_start $PROG
+    service_start $PROG
 }                 
  
 stop() {          
-        service_stop $PROG
+#   start-stop-daemon cannot stop whole process group:
+#   service_stop $PROG
+    NAME=${PROG##*/}
+    set -- `pidof $NAME`
+    PID=$1
+    [ -z "$PID" ] && return
+    PGID=`< /proc/$PID/stat sed -n '$s/.*) [^ ]* [^ ]* \([^ ]*\).*/\1/p'`
+    [ -z "$PGID" ] && return
+    kill -KILL -$PGID
 }
