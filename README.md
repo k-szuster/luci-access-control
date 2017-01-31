@@ -42,8 +42,7 @@ folder.
 
 - After this has been completed, call 
 
-	./scripts/feeds update luci
-	./scripts/feeds install -a luci
+	./scripts/feeds update luci ; ./scripts/feeds install -a luci
 
 from your openwrt folder. 
 
@@ -58,5 +57,6 @@ Here, you must include the following packages in your OpenWRT build for everythi
 - Call make to compile OpenWRT with the selected package installed.
 You'll find it in <openwrt>/bin/<target>/packages/luci/luci-app-access-control_....ipk file.
 
-On OpenWrt-BB, after installing the ipk package you need to additionally run this command on the device:
+- On OpenWrt-BB, after installing the ipk, you need to additionally run this command on the device:
+
 	/etc/init.d/inetac enable
