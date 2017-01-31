@@ -29,28 +29,34 @@ To install prebuilt package
 ----------------------------
 Visit: https://github.com/k-szuster/luci-access-control/releases
 Download ipk file to your device and install it with opkg.
-Or:
-copy contents of luci-app-access-control/files to / directory on target devicee.
 
-To build the package for OpenWrt BB
+To build the package OpenWrt 
 -----------------------------------
+The package is designed to be huilt on OpenWrt-CC, for any target (it is architecture independent).
+
 - Place folder luci-access-control into your 
 
 	<openwrt>/feeds/luci/applications
 
-folder.
-
-- You MUST also add the following line to your /openwrt/feeds/luci/contrib/package/luci-addons/Makefile
-
-	$(eval $(call application,access-control,Restrict internet access for specified clients using schedules))
+folder. 
 
 - After this has been completed, call 
 
+	./scripts/feeds update luci
+	./scripts/feeds install -a luci
+
+from your openwrt folder. 
+
+- Call
+
 	make menuconfig
 
-from your openwrt folder. Here, you must include the following packages in your OpenWRT build for everything to work.
+Here, you must include the following packages in your OpenWRT build for everything to work:
 
 	LuCI -> applications -> luci-app-access-control
 
 - Call make to compile OpenWRT with the selected package installed.
 You'll find it in <openwrt>/bin/<target>/packages/luci/luci-app-access-control_....ipk file.
+
+On OpenWrt-BB, after installing the ipk package you need to additionally run this command on the device:
+	/etc/init.d/inetac enable

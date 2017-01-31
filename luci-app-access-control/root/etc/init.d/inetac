@@ -1,7 +1,7 @@
 #!/bin/sh /etc/rc.common
 # Copyright 2016 Krzysztof Szuster
 #
-#    This file is part of luci-access-control
+#    This file is part of luci-app-access-control
 #
 START=70
 STOP=15
