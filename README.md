@@ -28,7 +28,10 @@ for a standalone-package version of the same software.
 To install prebuilt package
 ----------------------------
 Visit: https://github.com/k-szuster/luci-access-control/releases
+
 Download ipk file to your device and install it with opkg.
+
+Reboot.
 
 To build the package OpenWrt 
 -----------------------------------
@@ -61,3 +64,5 @@ You'll find it in <openwrt>/bin/<target>/packages/luci/luci-app-access-control_.
 ```
 	/etc/init.d/inetac enable
 ```
+
+- Reboot.
