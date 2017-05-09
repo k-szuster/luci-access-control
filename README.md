@@ -41,22 +41,23 @@ The package is designed to be huilt on OpenWrt-CC, for any target (it is archite
 folder. 
 
 - After this has been completed, call 
-
+```
 	./scripts/feeds update luci ; ./scripts/feeds install -a luci
-
+```
 from your openwrt folder. 
 
 - Call
-
+```
 	make menuconfig
-
+```
 Here, you must include the following packages in your OpenWRT build for everything to work:
-
+```
 	LuCI -> applications -> luci-app-access-control
-
+```
 - Call make to compile OpenWRT with the selected package installed.
 You'll find it in <openwrt>/bin/<target>/packages/luci/luci-app-access-control_....ipk file.
 
 - On OpenWrt-BB, after installing the ipk, you need to additionally run this command on the device:
-
+```
 	/etc/init.d/inetac enable
+```
