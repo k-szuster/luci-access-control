@@ -18,6 +18,11 @@ exit 0
 endef
 
 define Package/luci-app-access-control/prerm
+#!/bin/sh
+/etc/init.d/inetac stop
+/etc/init.d/inetac disable
+exit 0
+This version cleans up configuration, bot fails on CC:
 #!/usr/bin/lua
 require "uci"
 os.execute ("exec /etc/init.d/inetac stop")
