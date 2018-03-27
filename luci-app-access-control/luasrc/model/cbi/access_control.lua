@@ -68,7 +68,7 @@ local s_rule = mr:section(TypedSection, "rule", translate("Client Rules"))
     s_rule.defaults.dest    = "wan"
     s_rule.defaults.target  = "REJECT"
     s_rule.defaults.proto    = "0"
-    s_rule.defaults.extra = "--kerneltz"
+--    s_rule.defaults.extra = "--kerneltz"
     
     -- only AC-related rules
     s_rule.filter = function (self, section)
@@ -124,15 +124,37 @@ local s_rule = mr:section(TypedSection, "rule", translate("Client Rules"))
         end)
 
 -----------------------------------------------------------        
+    function time_cfgvalue (opt, section)
+        local value = Value.cfgvalue(opt, section)
+--        local value = opt.map:get (opt.section.section, opt.option)
+	local hh, mm
+        hh,mm = string.match (value, "^(%d?%d):(%d%d)")
+        if hh and mm then
+    	    return hh..mm
+    	else
+    	    return ''
+	end
+    end
+
+    function time_write(opt, section, value)        
+	Value.write(opt, section, value..':00'
+    end
+
     function validate_time(self, value, section)
-        local hh, mm
-        hh,mm = string.match (value, "^(%d?%d):(%d%d)$")
-        hh = tonumber (hh)
-        mm = tonumber (mm)
-        if hh and mm and hh <= 23 and mm <= 59 then
-            return value
+        local hh, mm, ss
+        hh,mm,ss = string.match (value, "^(%d?%d):(%d%d):(%d%d)$")
+        if not hh then
+    	    hh,mm = string.match (value, "^(%d?%d):(%d%d)$")
+    	    ss = '00'
+        end
+        local h, m, s
+        h = tonumber (hh)
+        m = tonumber (mm)
+        s = tonumber (ss)
+        if h and m and s and h  <= 23 and m <= 59 and s <= 59 then
+            return hh..':'..mm..':'..ss
         else
-            return nil, translate("Time value must be HH:MM or empty")
+            return nil, translate("Time value must be HH:MM[:SS] or empty")
         end
     end
     
