@@ -124,47 +124,53 @@ local s_rule = mr:section(TypedSection, "rule", translate("Client Rules"))
         end)
 
 -----------------------------------------------------------        
-    function time_cfgvalue (opt, section)
-        local value = Value.cfgvalue(opt, section)
---        local value = opt.map:get (opt.section.section, opt.option)
-	local hh, mm
-        hh,mm = string.match (value, "^(%d?%d):(%d%d)")
-        if hh and mm then
-    	    return hh..mm
-    	else
-    	    return ''
-	end
-    end
-
-    function time_write(opt, section, value)        
-	Value.write(opt, section, value..':00'
-    end
-
-    function validate_time(self, value, section)
-        local hh, mm, ss
-        hh,mm,ss = string.match (value, "^(%d?%d):(%d%d):(%d%d)$")
-        if not hh then
-    	    hh,mm = string.match (value, "^(%d?%d):(%d%d)$")
-    	    ss = '00'
+    function time_validate (self, value, section)
+        local hh, mm
+        hh = string.match (value, "^(%d?%d)$")
+        hh = tonumber (hh)
+        if hh and hh <= 23 then
+            return value..":00"
         end
-        local h, m, s
-        h = tonumber (hh)
-        m = tonumber (mm)
-        s = tonumber (ss)
-        if h and m and s and h  <= 23 and m <= 59 and s <= 59 then
-            return hh..':'..mm..':'..ss
+        hh,mm = string.match (value, "^(%d?%d):(%d%d)$")
+        hh = tonumber (hh)
+        mm = tonumber (mm)
+        if hh and mm and hh <= 23 and mm <= 59 then
+            return value
         else
-            return nil, translate("Time value must be HH:MM[:SS] or empty")
+            return nil, translate("Time value must be HH[:MM] or empty")
         end
     end
     
-    o = s_rule:option(Value, "start_time", translate("Start time"))
+    --  remove seconds on read
+    function time_cfgvalue (self, section)
+        local val = self.map:get (section, self.option)
+--        local val = Value.cfgvalue (self, section)
+        if type (val)=="string" then
+            return string.match (val, "^(%d?%d:%d%d)")        
+        end
+        return nil
+    end
+    
+    --  append seconds on write
+    function time_write (self, section, value)    
+        local short = string.match (value, "^(%d):")
+        if short then
+            value = "0"..value
+        end
+        return Value.write(self, section, value..":00")
+    end        
+    
+    o = s_rule:option (Value, "start_time", translate("Start time"))
         o.rmempty = true  -- do not validae blank
-        o.validate = validate_time 
+        o.cfgvalue = time_cfgvalue
+        o.write    = time_write
+        o.validate = time_validate 
         o.size = 5
-    o = s_rule:option(Value, "stop_time", translate("End time"))
+    o = s_rule:option (Value, "stop_time", translate("End time"))
         o.rmempty = true  -- do not validae blank
-        o.validate = validate_time
+        o.cfgvalue = time_cfgvalue
+        o.write    = time_write
+        o.validate = time_validate
         o.size = 5
         
 -----------------------------------------------------------        
