@@ -64,5 +64,5 @@ msgstr "Ważność biletu [min]"
 msgid "Time granted when a ticket is issued"
 msgstr "Czas dostępu do internetu po wydaniu biletu"
 
-msgid "Time value must be HH:MM or empty"
-msgstr "Czas należy podawać w formacie: GG:MM albo zostawić pusty""
+msgid "Time value must be HH[:MM] or empty"
+msgstr "Czas należy podawać w formacie: GG[:MM] albo zostawić pusty""
