@@ -37,7 +37,7 @@ To build the package OpenWrt
 -----------------------------------
 The package works on any target (it is architecture independent).
 May be built on OpenWrt-CC or later.
-The source files for BB and CC is placed in "master" branch. The DD (17) version - in "OpenWrt/Lede-17 " branch: https://github.com/k-szuster/luci-access-control/tree/OpenWrt/Lede-17.
+The source files for BB and CC is placed in "master" branch. The DD (17) version - in separate branch: https://github.com/k-szuster/luci-access-control/tree/OpenWrt/Lede-17.
 
 - Place folder luci-access-control into your 
 
