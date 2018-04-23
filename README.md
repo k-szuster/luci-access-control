@@ -20,10 +20,7 @@ Screen shot
 
 Source repository
 -----------------
-https://github.com/k-szuster/luci-access-control
-
-See also: https://github.com/k-szuster/luci-access-control-package
-for a standalone-package version of the same software.
+https://github.com/k-szuster/luci-access-control/tree/OpenWrt/Lede-17
 
 To install prebuilt package
 ----------------------------
@@ -35,7 +32,7 @@ Reboot.
 
 To build the package OpenWrt 
 -----------------------------------
-The package is designed to be huilt on OpenWrt-CC, for any target (it is architecture independent).
+The package is designed to be huilt on OpenWrt-DD/Lede, for any target (it is architecture independent).
 
 - Place folder luci-access-control into your 
 
