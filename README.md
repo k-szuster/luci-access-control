@@ -35,7 +35,9 @@ Reboot.
 
 To build the package OpenWrt 
 -----------------------------------
-The package is designed to be huilt on OpenWrt-CC, for any target (it is architecture independent).
+The package works on any target (it is architecture independent).
+May be built on OpenWrt-CC or later.
+The source files for BB and CC is placed in "master" branch. The DD (17) version - in "OpenWrt/Lede-17 " branch.
 
 - Place folder luci-access-control into your 
 
